@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+	<%- include('./partials/head.ejs') %>
+	<body>
+		<div class="container">
+			<h1 class="text-center fw-bold">Post</h1>
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="text-center" scope="col">User id</th>
+						<th class="text-center" scope="col">#</th>
+						<th class="text-center" scope="col">Title</th>
+						<th class="text-center" scope="col">Bady</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% response.map( (res) => { %>
+					<tr>
+						<th class="text-center" scope="row"><%= res.userId %></th>
+						<td class="text-center"><%= res.id %></td>
+						<td><%= res.title %></td>
+						<td>@<%= res.body %></td>
+					</tr>
+					<% }) %>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

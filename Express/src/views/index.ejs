@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+	<%- include('partials/head.ejs') %>
+	<body>
+		<h1>Página con Express</h1>
+
+		<% if (isActive) {%>
+		<p>El servidor está activo</p>
+		<%} else {%>
+		<p>El servidor está inactivo</p>
+		<%}%>
+		<p><%= new Date() %></p>
+
+		<% users.map( (user) => {%>
+		<p><%= user.id %> | <%= user.name %> | <%= user.lastname %></p>
+		<% }) %>
+	</body>
+</html>

@@ -1,4 +1,5 @@
-const { Router } = require('express');
+import { Router } from 'express';
+import axios from 'axios';
 
 const router = Router();
 
@@ -6,8 +7,6 @@ const router = Router();
 // 	console.log(`Rute: ${req.url} | Metodo: ${req.method}`);
 // 	next();
 // });
-
-// router.use(morgan('dev'));
 
 // router.use((req, res, next) => {
 // 	if (req.query.login === 'jhon@camargo.com') {
@@ -17,20 +16,62 @@ const router = Router();
 // 	}
 // });
 
+router.get('/posts', async (req, res) => {
+	const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+	res.render('posts', { title: 'Data from API', response: response.data });
+});
+
+router.get('/', (req, res) => {
+	let isActive = true;
+
+	const users = [
+		{
+			id: 1,
+			name: 'Jhon',
+			lastname: 'Camargo',
+		},
+		{
+			id: 2,
+			name: 'Alexander',
+			lastname: 'Cadena',
+		},
+		{
+			id: 3,
+			name: 'Jacc',
+			lastname: 'Hernandez',
+		},
+		{
+			id: 4,
+			name: 'Alejandra',
+			lastname: 'Giraldo',
+		},
+		{
+			id: 5,
+			name: 'Francia',
+			lastname: 'Vivir sabroso',
+		},
+	];
+	res.render('index', { title: 'index page', isActive, users });
+});
+
 router.get('/dashboard', (req, res) => {
-	res.send('Dashboard page');
+	const title = 'My page with Express';
+	res.render('dashboard', { title });
 });
 
 router.get('/profile', (req, res) => {
-	res.send('Profile page');
+	const title = 'My page with Express';
+	res.render('index', { title });
+	// res.send('Profile page');
 });
 
-router.all('/about', (req, res) => {
-	res.send('About page');
+router.all('/users', (req, res) => {
+	const title = 'My page with Express';
+	res.render('users', { title });
 });
 
-// router.use((req, res) => {
-// 	res.status(404).send('Page no found');
-// });
+router.use((req, res) => {
+	res.status(404).send('Page no found');
+});
 
-module.exports = router;
+export default router;
