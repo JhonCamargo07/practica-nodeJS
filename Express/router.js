@@ -1,77 +1,34 @@
 const { application } = require('express');
 const express = require('express');
+const morgan = require('morgan');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-	res.send('Hellow World');
-});
+// router.use((req, res, next) => {
+// 	console.log(`Rute: ${req.url} | Metodo: ${req.method}`);
+// 	next();
+// });
 
-router.all('/info', (req, res) => {
-	res.send('Server info');
-});
+router.use(morgan('dev'));
 
-router.get('/senasoft', (req, res) => {
-	res.sendFile('./static/SenaSoft.pdf', {
-		root: __dirname,
-	});
-});
-
-router.get('/user', (req, res) => {
-	res.json({
-		name: 'JhonCamargo07',
-		age: '40',
-		adrres: {
-			city: 'new york',
-			street: 'some stret 123',
-		},
-		points: [1, 2, 3],
-	});
-});
-
-router.get('/isAlive', (req, res) => {
-	res.sendStatus(204);
-});
-router.post('/user', (req, res) => {
-	console.log(req.body);
-	res.status(200).send('Nuevo usuario creado');
-});
-
-router.get('/hello/:user', (req, res) => {
-	res.send(`Hello ${req.params.user}`);
-});
-
-router.get('/add/:x/:y', (req, res) => {
-	const { x, y } = req.params;
-
-	req.params.x = parseFloat(x);
-	req.params.y = parseFloat(y);
-	res.send(`La suma es: ${req.params.x + req.params.y}`);
-});
-
-router.get('/user/:name/photo', (req, res) => {
-	console.log(`${req.params.name}`);
-	if (req.params.name === 'node') {
-		return res.sendFile('./static/node_modules.png', {
-			root: __dirname,
-		});
-	}
-	res.send('Phono no found, acces degenated');
-});
-
-router.get('/name/:name/age/:age', (req, res) => {
-	const { name, age } = req.params;
-	console.log(`${req.params}`);
-	res.send(`El ususario ${name} tiene ${age} años`);
-});
-
-router.get('/search', (req, res) => {
-	console.log(req.query);
-	if (req.query.q === 'javascript books') {
-		res.send('Lista de libros de JavaScript');
+router.use((req, res, next) => {
+	if (req.query.login === 'jhon@camargo.com') {
+		next();
 	} else {
-		res.send('Página normal');
+		res.send('No autorizado');
 	}
+});
+
+router.get('/dashboard', (req, res) => {
+	res.send('Dashboard page');
+});
+
+router.get('/profile', (req, res) => {
+	res.send('Profile page');
+});
+
+router.all('/about', (req, res) => {
+	res.send('About page');
 });
 
 router.use((req, res) => {
