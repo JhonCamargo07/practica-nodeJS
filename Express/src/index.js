@@ -23,8 +23,11 @@ import ejs from 'ejs';
 import fileRouter from './routes/files.js';
 import indexRouter from './routes/index.js';
 import * as url from 'url';
+import connectBD from './db.js';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+connectBD();
 
 const app = express();
 
